@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Cast Your Vote</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="vote-options">
+                {% for candidate in candidates %}
+                <label class="vote-option">
+                    <input type="radio" name="candidate" value="{{ candidate.id }}" required>
+                    {{ candidate.name }} (Current Votes: {{ candidate.votesCount }})
+                </label>
+                {% endfor %}
+            </div>
+            <button type="submit" class="button">Submit Vote</button>
+        </form>
+
+        <div class="nav-links">
+            <a href="{{ url_for('admin') }}" class="button">Admin Panel</a>
+            <a href="{{ url_for('logout') }}" class="button danger">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

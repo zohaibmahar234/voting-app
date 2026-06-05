@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoteNow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span class="thumbs-up">👍</span> VoteNow
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">How to Use</a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1>Simple Voting in Seconds</h1>
+        <p class="subtitle">
+            Create polls, share them with others and get 
+            instant results - all free and without registration.
+        </p>
+
+        <div class="cta-buttons">
+            <a href="{{ url_for('create_poll') }}" class="button primary">Create Poll</a>
+            <a href="{{ url_for('join_poll') }}" class="button secondary">Join Poll</a>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <h2>Why VoteNow?</h2>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Live Results</h3>
+                <p>Track voting results in real time with automatic updates.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Anonymity</h3>
+                <p>All votes are anonymous. We don't store any personal data.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🔗</div>
+                <h3>Easy Sharing</h3>
+                <p>Share your poll via link or QR code with anyone you want to invite.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Optimized</h3>
+                <p>Perfect on all devices - from desktop to smartphone.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 VoteNow. All rights reserved.</p>
+    </footer>
+</body>
+</html>

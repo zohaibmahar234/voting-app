@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Poll | VoteNow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <span class="thumbs-up">👍</span> VoteNow
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">How to Use</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Create Your Poll</h2>
+        
+        <form method="post" id="pollForm">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <div class="form-group">
+                <label for="question">Your Question</label>
+                <input type="text" id="question" name="question" placeholder="e.g. What is your favorite color?" required>
+            </div>
+
+            <div class="form-group">
+                <label>Answer Options</label>
+                <div id="options-container">
+                    <div class="option-input">
+                        <input type="text" name="option" placeholder="Option 1" required>
+                        <span class="delete-option">🗑️</span>
+                    </div>
+                    <div class="option-input">
+                        <input type="text" name="option" placeholder="Option 2" required>
+                        <span class="delete-option">🗑️</span>
+                    </div>
+                </div>
+                <button type="button" id="add-option" class="button secondary">+ Add Option</button>
+            </div>
+
+            <button type="submit" class="button primary" style="width: 100%;">Create Poll</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add option functionality
+            document.getElementById('add-option').addEventListener('click', function() {
+                const container = document.getElementById('options-container');
+                const optionCount = container.querySelectorAll('.option-input').length;
+                
+                const newOption = document.createElement('div');
+                newOption.className = 'option-input';
+                newOption.innerHTML = `
+                    <input type="text" name="option" placeholder="Option ${optionCount + 1}" required>
+                    <span class="delete-option">🗑️</span>
+                `;
+                container.appendChild(newOption);
+                
+                // Add delete functionality to the new option
+                addDeleteFunctionality(newOption.querySelector('.delete-option'));
+            });
+            
+            // Add delete functionality to existing options
+            document.querySelectorAll('.delete-option').forEach(addDeleteFunctionality);
+            
+            function addDeleteFunctionality(element) {
+                element.addEventListener('click', function() {
+                    const optionsCount = document.querySelectorAll('.option-input').length;
+                    if (optionsCount > 2) {
+                        this.parentElement.remove();
+                    } else {
+                        alert('At least 2 options are required');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

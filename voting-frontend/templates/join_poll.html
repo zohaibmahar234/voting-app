@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Poll | VoteNow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <span class="thumbs-up">👍</span> VoteNow
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">How to Use</a>
+        </div>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <h2>Join a Poll</h2>
+        
+        <div class="form-group">
+            <label>Poll ID or Link</label>
+            <form method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="text" name="poll_id" placeholder="e.g. ABC123 or votenow.app/v/ABC123" required>
+                <button type="submit" class="button primary" style="width: 100%; margin-top: 1rem;">Join Poll</button>
+            </form>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <p style="color: var(--text-light);">- or -</p>
+        </div>
+
+        <div class="qr-container">
+            <div style="text-align: center;">
+                <h3>Scan QR Code</h3>
+                <div style="font-size: 4rem; color: var(--text-light); margin: 1rem 0;">
+                    📷
+                </div>
+                <p style="color: var(--text-light);">
+                    Open your smartphone camera and scan the QR code
+                </p>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{{ url_for('home') }}" class="button secondary">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

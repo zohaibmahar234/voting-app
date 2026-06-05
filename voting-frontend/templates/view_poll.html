@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ poll.question }} | VoteNow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <span class="thumbs-up">👍</span> VoteNow
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">How to Use</a>
+        </div>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <h2 class="poll-question">{{ poll.question }}</h2>
+        
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <div class="poll-options">
+                {% for option in poll.options %}
+                <label class="poll-option">
+                    <input type="radio" name="option" value="{{ loop.index0 }}" required>
+                    <span>{{ option.text }}</span>
+                    <div class="poll-option-color" style="background-color: 
+                        {% if loop.index0 == 0 %}#3b82f6
+                        {% elif loop.index0 == 1 %}#ef4444
+                        {% elif loop.index0 == 2 %}#10b981
+                        {% elif loop.index0 == 3 %}#f59e0b
+                        {% else %}#8b5cf6{% endif %};"></div>
+                </label>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="button primary" style="width: 100%;">Vote</button>
+        </form>
+    </div>
+</body>
+</html>

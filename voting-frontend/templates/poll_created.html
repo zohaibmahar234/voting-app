@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Created | VoteNow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <span class="thumbs-up">👍</span> VoteNow
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">How to Use</a>
+        </div>
+    </div>
+
+    <div class="container success-container">
+        <div class="success-icon">✓</div>
+        
+        <h2>Your Poll is Ready!</h2>
+        
+        <p class="share-text">Share the link or QR code with others so they can vote.</p>
+        
+        <div class="qr-container">
+            <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+        </div>
+        
+        <div class="share-link">
+            <input type="text" value="{{ poll_link }}" id="poll-link" readonly>
+            <button class="button copy-button" onclick="copyLink()">
+                <span>Copy</span>
+            </button>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="{{ url_for('poll_results', poll_id=poll_id) }}" class="button primary">Show Results</a>
+            <a href="{{ url_for('create_poll') }}" class="button secondary">Create New Poll</a>
+        </div>
+    </div>
+
+    <script>
+        function copyLink() {
+            const copyText = document.getElementById("poll-link");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            
+            const copyButton = document.querySelector(".copy-button span");
+            copyButton.textContent = "Copied!";
+            setTimeout(() => {
+                copyButton.textContent = "Copy";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
